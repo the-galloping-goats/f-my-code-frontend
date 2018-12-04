@@ -4,8 +4,8 @@
   "description": "",
   "main": "sass/mystyles.scss",
   "scripts": {
-    "build": "browserify scripts/main.js -o bundle.js",
-    "watch": "watchify -d scripts/main.js -o bundle.js",
+    "build": "browserify scripts/homepage.js -o bundle.js",
+    "watch": "watchify -d scripts/homepage.js -o bundle.js",
     "dev-server": "live-server .",
     "dev": "run-all \"npm run watch\" \"npm run dev-server\" \"npm run css-watch\"",
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/main.css",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "materialize-css": "^1.0.0-rc.2",
+    "node-sass": "^4.10.0",
     "sass": "^1.15.1"
   }
 }
