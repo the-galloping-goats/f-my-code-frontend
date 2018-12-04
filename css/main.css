@@ -1,1 +1,13 @@
-@import url("https://fonts.googleapis.com/css?family=Playfair+Display:900|Shadows+Into+Light");
+#head {
+  background-color: #27233A; }
+
+#title {
+  color: #B3C0A4; }
+
+#pageOn {
+  color: #B3C0A4; }
+
+#headerImg {
+  background: linear-gradient(rgba(204, 204, 204, 0.5), rgba(204, 204, 204, 0.5)), url("/img/plankSZ.jpg") repeat;
+  background-position: 0 auto;
+  background-size: 0/50% auto; }

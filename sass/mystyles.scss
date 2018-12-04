@@ -1,5 +1,26 @@
 @charset "utf-8";
 
 
+$lightpurple: #27233A;
+$purple: #505168;
+$ash: #B3C0A4;
+$eggshell: #EAEFD3;
+$palegold: #DCC48E;
+$matteBlack: #cccccc;
 
-
+#head {
+background-color: $lightpurple;
+}
+#title {
+  color: $ash;
+}
+#pageOn {
+  color: $ash;
+}
+#headerImg {
+background: linear-gradient( transparentize($matteBlack, 0.50),
+transparentize($matteBlack, 0.50)),
+url('/img/plankSZ.jpg') repeat;
+background-position: 0 auto;
+background-size: 0/50% auto;
+}
