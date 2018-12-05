@@ -1,4 +1,8 @@
 node_modules
 bundle.js
 package-lock.json
+<<<<<<< HEAD
+=======
+bundle.js
+>>>>>>> buildposts
 .DS_Store
