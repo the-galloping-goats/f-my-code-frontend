@@ -5,11 +5,7 @@
  *  object = {
  *    id : "...",
  *    innerText: "...",
-<<<<<<< HEAD
- *    properties: ["...", "..."],
-=======
  *    attributes: ["...", "..."],
->>>>>>> buildposts
  *    children: ["...", "..."],
  *    class: ["...", "..."]
  *  }
@@ -28,15 +24,9 @@ function buildElement(type, features) {
     el.className = features.class.join(" ");
   }
 
-<<<<<<< HEAD
-  if (features.properties) {
-    features.properties.forEach(property => {
-      el.setProperty(property, properties[property]);
-=======
   if (features.attributes) {
     features.attributes.forEach(property => {
       el.setAttribute(attribute, features.attributes[property]);
->>>>>>> buildposts
     });
   }
 
@@ -52,8 +42,5 @@ function buildElement(type, features) {
 
   return el;
 }
-<<<<<<< HEAD
-=======
 
 module.exports = buildElement;
->>>>>>> buildposts
