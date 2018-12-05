@@ -7,4 +7,5 @@ function getCommentsHandler(e) {
 }
 
 
-module.exports = { getCommentsHandler }
+
+module.exports = { getCommentsHandler, showCommentsBtn }
