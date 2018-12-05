@@ -2,28 +2,18 @@ const axios = require("axios");
 const buildElement = require("./utils");
 
 
-
 function buildComments (comments) {
-  console.log(comments);
-  
-  comments.forEach(comment => {
-    console.log(buildComments(comments));
-  });
+  console.log(comments)
+
+postMessage.forEach(comment => {
+  console.log(buildComPanel(comment))
+});
 }
 
+function buildComPanel({id, username, comment})
+const userHTML = buildElement("h4", { innerText: username })
+const commHTML = buildElement("span", { innerText: description })
 
 
 
 
-
-<li>
-<div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-</li>
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.collapsible');
-  var instances = M.Collapsible.init(elems);
-});
