@@ -20,4 +20,32 @@
 body {
   background: linear-gradient(rgba(204, 204, 204, 0.1), rgba(204, 204, 204, 0.1)), url("/img/compRSZ.jpg") repeat;
   background-position: 0 auto;
-  background-size: 0/50% auto; }
+  background-size: 0/50% auto;
+  background-attachment: fixed;
+}
+
+
+/*
+ *  CARD PANEL SETTINGS
+ */
+
+div.card-panel a#read-comments,
+div.card-panel code {
+  display: block;
+}
+
+div.card-panel h3 {
+  font-size: 27px;
+}
+
+div.card-panel a#read-comments {
+  margin-top: 50px;
+  text-align: center;
+}
+
+code {
+  background: #333;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+}

@@ -14,6 +14,7 @@
  *  DOM
  */
 function buildElement(type, features) {
+  console.log(type);
   const el = document.createElement(type);
 
   if (features.id) {

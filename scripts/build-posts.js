@@ -1,20 +1,25 @@
 const axios = require("axios");
 const buildElement = require("./utils");
 
+const postsDiv = document.querySelector("#showPosts");
+
 function buildPosts (posts) {
   console.log(posts);
 
   posts.forEach(post => {
-    console.log(buildPanel(post));
+    postsDiv.appendChild(buildPanel(post));
   });
 }
 
 function buildPanel({ id, description, code, title }) {
-  const titleHTML = buildElement("h2", { innerText: title });
-  const descHTML = buildElement("span", { innerText: description });
+  const titleHTML = buildElement("h3", { innerText: title });
+  const descHTML = buildElement("div", { innerText: description });
   const codeHTML = buildElement("code", { innerText: code });
+  const commButHTML = buildElement("a", { id: "read-comments", innerText: "Read Comments" })
 
-  const cellHTML = buildElement("div", { class: [ "col", "m12" ], children: [titleHTML, descHTML, codeHTML]});
+  const cardHTML = buildElement("div", { class: [ "card-panel" ], children: [ titleHTML, descHTML, codeHTML, commButHTML ]})
+
+  const cellHTML = buildElement("div", { class: [ "col", "m12" ], children: [ cardHTML ]});
 
   const rowHTML = buildElement("div", { class: [ "row" ], children: [ cellHTML ]});
 
