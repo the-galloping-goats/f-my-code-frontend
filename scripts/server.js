@@ -1,36 +1,37 @@
 const axios = require('axios')
 const heroku = "https://f-my-code.herokuapp.com";
 
+
 function getAllPosts() {
   return axios.get(heroku)
 }
 
-function getAllComments() {
-  return axios.get(heroku)
+function getAllComments(id) {
+  return axios.get(heroku + "/posts/" + id + "/comments")
 }
 
 function createPost(newPost) {
-  return axios.post(heroku)
+  return axios.post(heroku + "/posts/", newPost)
 }
 
-function createComment(newComment) {
-  return axios.post(heroku)
+function createComment(id, newComment) {
+  return axios.post(heroku + "/posts/" + id + "/comments", newComment)
 }
 
 function updatePost(id, newPost) {
-  return axios.put(heroku + "/" + id, newPost)
+  return axios.put(heroku + "/posts/" + id, newPost)
 }
 
 function updateComment(id, newComment) {
-  return axios.put(heroku + "/" + id, newComment)
+  return axios.put(heroku + "/posts/" + id + "/comments", newComment)
 }
 
 function delPost(id) {
-  return axios.delete(heroku + "/" + id)
+  return axios.delete(heroku + "/posts/" + id)
 }
 
-function delComment(id) {
-  return axios.delete(heroku + "/" + id)
+function delComment(id, cId) {
+  return axios.delete(heroku + "/posts/" + id + "/comments", cId)
 }
 
 module.exports = {
