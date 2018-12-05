@@ -17,6 +17,20 @@
   font-size: 40px;
   padding-left: 50px; }
 
+label {
+  color: #d1bf94;
+  font-size: 25px;
+}
+
+input {
+  color: #d7a674;
+  font-size:25px;
+}
+
+.submit {
+  color: #27233A
+}
+
 body {
   background: linear-gradient(rgba(204, 204, 204, 0.1), rgba(204, 204, 204, 0.1)), url("/img/compRSZ.jpg") repeat;
   background-position: 0 auto;
