@@ -1,13 +1,23 @@
 #head {
-  background-color: #27233A; }
+  background-color: #27233A;
+  height: 60px; }
 
 #title {
-  color: #B3C0A4; }
+  color: #EAEFD3;
+  font-family: 'VT323', monospace;
+  font-size: 75px; }
 
-#pageOn {
-  color: #B3C0A4; }
+#headerTitle {
+  color: #d1bf94;
+  font-family: 'Roboto Slab', serif; }
 
-#headerImg {
-  background: linear-gradient(rgba(204, 204, 204, 0.5), rgba(204, 204, 204, 0.5)), url("/img/homecomputer.jpg") repeat;
+#leftTitle {
+  color: #d1bf94;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
+  padding-left: 50px; }
+
+body {
+  background: linear-gradient(rgba(204, 204, 204, 0.1), rgba(204, 204, 204, 0.1)), url("/img/compRSZ.jpg") repeat;
   background-position: 0 auto;
   background-size: 0/50% auto; }
