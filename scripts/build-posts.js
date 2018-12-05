@@ -38,9 +38,9 @@ function buildElement(type, features) {
     el.className = features.class.join(" ");
   }
 
-  if (features.properties) {
-    features.properties.forEach(property => {
-      el.setProperty(property, properties[property]);
+  if (features.attributes) {
+    features.attributes.forEach(attributes => {
+      el.setAttribute(attribute, attributes[attribute]);
     });
   }
 
