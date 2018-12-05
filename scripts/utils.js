@@ -5,7 +5,7 @@
  *  object = {
  *    id : "...",
  *    innerText: "...",
- *    properties: ["...", "..."],
+ *    attributes: ["...", "..."],
  *    children: ["...", "..."],
  *    class: ["...", "..."]
  *  }
@@ -24,9 +24,9 @@ function buildElement(type, features) {
     el.className = features.class.join(" ");
   }
 
-  if (features.properties) {
-    features.properties.forEach(property => {
-      el.setProperty(property, properties[property]);
+  if (features.attributes) {
+    features.attributes.forEach(property => {
+      el.setAttribute(attribute, features.attributes[property]);
     });
   }
 
