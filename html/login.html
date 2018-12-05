@@ -1,9 +1,46 @@
-<form name="login">
-  <label for="username">Username: </label>
-  <input type="text" name="username" required>
+<!DOCTYPE html>
+<html>
 
-  <label for="password">Password: </label>
-  <input type="password" name="password" required>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F this login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:800|PT+Sans:700i|Playfair+Display:900|Roboto+Slab|VT323"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <script defer src="/bundle.js"></script>
+</head>
 
-  <input type="submit" name="submit">
-</form>
+<body>
+  <div class="navbar-fixed">
+  <nav id='head'>
+    <div>
+      <span id="leftTitle">F{uck} My Code</span>
+      <ul class="right">
+        <li><a href="/html/signup.html" id='headerTitle'><i class="fas fa-user-plus"></i> Sign up</i></a></li>
+        <li><a href="/html/login.html" id='headerTitle'><i class="fas fa-sign-in-alt"></i> Login</i></a></li>
+      </ul>
+  </nav>
+  </div>
+  <div id="wrapperHeader">
+    <div id="header">
+      <h2 class='center-align' id='title'>Aggressive Alternative to StackOverflow.</h2>
+      <img alt="" id='headerImg' />
+    </div>
+  </div>
+  <div class='container' id="showPosts">
+  </div>
+
+  <form name="login">
+    <label for="username">Username: </label>
+    <input type="text" name="username" required>
+  
+    <label for="password">Password: </label>
+    <input type="password" name="password" required>
+  
+    <input type="submit" name="submit">
+  </form>
