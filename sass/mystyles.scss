@@ -1,26 +1,42 @@
 @charset "utf-8";
 
 
-$lightpurple: #27233A;
-$purple: #505168;
+$purple: #27233A;
+$lightpurple: #505168;
 $ash: #B3C0A4;
 $eggshell: #EAEFD3;
-$palegold: #DCC48E;
+$palegold: rgb(209, 191, 148);
 $matteBlack: #cccccc;
 
+
+
+
 #head {
-background-color: $lightpurple;
+background-color: $purple;
+height: 60px;
 }
+
 #title {
-  color: $ash;
+  color: $eggshell;
+  font-family: 'VT323', monospace;
+  font-size: 75px;
 }
-#pageOn {
-  color: $ash;
+
+#headerTitle {
+  color: $palegold;
+  font-family: 'Roboto Slab', serif;
 }
-#headerImg {
-background: linear-gradient( transparentize($matteBlack, 0.50),
-transparentize($matteBlack, 0.50)),
-url('/img/homecomputer.jpg') repeat;
+#leftTitle {
+  color: $palegold;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
+  padding-left: 50px;
+}
+
+body {
+background: linear-gradient( transparentize($matteBlack, 0.90),
+transparentize($matteBlack, 0.90)),
+url('/img/compRSZ.jpg') repeat;
 background-position: 0 auto;
 background-size: 0/50% auto;
 }
