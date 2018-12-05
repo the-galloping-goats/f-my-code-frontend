@@ -3,7 +3,7 @@ const heroku = "https://f-my-code.herokuapp.com";
 
 
 function getAllPosts() {
-  return axios.get(heroku)
+  return axios.get(heroku + "/posts")
 }
 
 function getAllComments(id) {
@@ -11,7 +11,7 @@ function getAllComments(id) {
 }
 
 function createPost(newPost) {
-  return axios.post(heroku + "/posts/", newPost)
+  return axios.post(heroku + "/posts", newPost)
 }
 
 function createComment(id, newComment) {

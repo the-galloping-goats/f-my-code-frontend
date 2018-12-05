@@ -28,25 +28,25 @@ getAllPosts()
   .catch(err => console.log(err))
 
 
-getAllComments() 
-  .then((res) => {
-    buildComments(res.data)
-  })
-.catch(err => console.log(err))
+// getAllComments() 
+//   .then((res) => {
+//     buildComments(res.data)
+//   })
+// .catch(err => console.log(err))
 
 ////////////////////////////  UPDATE POSTS ////////////////////////////////////////
 
-updatePost()
-.then((res) => {
-  buildPosts(res.data)
-})
+// updatePost()
+// .then((res) => {
+//   buildPosts(res.data)
+// })
 
 ////////////////////////////  UPDATE COMMENTS ///////////////////////////////////////
 
-updateComment() 
-  .then((res) => {
+// updateComment() 
+//   .then((res) => {
 
-  })
+//   })
 
 
 ////////////////////////////  REMOVE POST & COMMENTS ////////////////////////////////
