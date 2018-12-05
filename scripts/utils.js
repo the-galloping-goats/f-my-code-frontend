@@ -50,4 +50,4 @@ function buildElement(type, features) {
   return el;
 }
 
-module.exports =buildElement;
+module.exports = buildElement;
