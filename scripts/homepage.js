@@ -12,13 +12,7 @@ const {
 } = require('./server')
 
 
-// function getData() {
-//   axios.get(`${server}/posts`)
-//     .then(res => {
-//       buildPosts(res.data);
-//     })
-//     .catch(err => console.log(err));
-// }
+
 
 ////////////////////////////  GET ALL ////////////////////////////////////////
 getAllPosts()
@@ -28,40 +22,48 @@ getAllPosts()
   .catch(err => console.log(err))
 
 
-getAllComments()
-  .then((res) => {
-    buildComments(res.data)
-  })
-.catch(err => console.log(err))
+// getAllComments()
+//   .then((res) => {
+//     buildComments(res.data)
+//   })
+// .catch(err => console.log(err))
 
 ////////////////////////////  UPDATE POSTS ////////////////////////////////////////
 
-// updatePost()
-// .then((res) => {
-//   buildPosts(res.data)
-// })
+
 
 ////////////////////////////  UPDATE COMMENTS ///////////////////////////////////////
 
-// updateComment()
-//   .then((res) => {
-//
-//   })
+
 
 
 ////////////////////////////  REMOVE POST & COMMENTS ////////////////////////////////
 
 
-
-
 ////////////////////////////  REMOVE COMMENT ////////////////////////////////////////
 
+function hideBtns() {
+  const loggedIn = !!localStorage.getItem("token")
+  const userId = localStorage.getItem("user_id")
+  const postId = document.querySelectorAll("#id").getAttribute("data-post-id")
 
+  if (loggedIn) {
+    document.querySelector("#rating").classList.remove("hide")
+    document.querySelector("#createPost").classList.remove("hide")
+  }
+
+  if (loggedIn && userId === postId) {
+    document.querySelector("#remove-post").classList.remove("hide")
+    document.querySelector("#edit-post").classList.remove("hide")
+  }
+}
 
 
 ////////////////////////////  ADD BUTTON EVENTS ////////////////////////////////////////
 
 
-
+module.exports = {
+  hideBtns,
+}
 
 document.addEventListener("DOMContentLoaded", getAllPosts);

@@ -26,7 +26,7 @@ function updateComment(id, newComment) {
   return axios.put(heroku + "/posts/" + id + "/comments", newComment)
 }
 
-function delPost(id) {
+function delPost() {
   return axios.delete(heroku + "/posts/" + id)
 }
 
@@ -45,6 +45,6 @@ module.exports = {
   createComment,
   updatePost,
   updateComment,
-  // delPost,
+  delPost,
   delComment
 }
