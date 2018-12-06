@@ -21,13 +21,6 @@ getAllPosts()
   })
   .catch(err => console.log(err))
 
-
-// getAllComments()
-//   .then((res) => {
-//     buildComments(res.data)
-//   })
-// .catch(err => console.log(err))
-
 ////////////////////////////  UPDATE POSTS ////////////////////////////////////////
 
 

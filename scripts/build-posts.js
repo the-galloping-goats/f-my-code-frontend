@@ -38,6 +38,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating })
   const delButHTML = buildElement("a", {
     id: "remove-post",
     innerText: "❌",
+    attributes: {"data-post-id": id },
     listeners: [
       { action: "click", callback: listeners.getDeleteHandler }]
   });

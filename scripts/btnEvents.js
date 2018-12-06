@@ -25,6 +25,8 @@ function getCommentsHandler(e) {
 }
 
 function getDeleteHandler(e){
+  console.log(e.target.getAttribute('data-post-id'));
+  
   server.delPost(e.target.getAttribute('data-post-id'))
     .then((res) => {
       removePostsDOM(res.data)

@@ -26,8 +26,14 @@ function updateComment(id, newComment) {
   return axios.put(heroku + "/posts/" + id + "/comments", newComment)
 }
 
-function delPost() {
-  return axios.delete(heroku + "/posts/" + id)
+function delPost(id) {
+  const token = localStorage.getItem("token")
+  return axios.delete(
+    heroku + "/posts/" + id, {
+    headers: {
+      Authorization: "bearer " + token
+    }
+  })
 }
 
 function delComment(id, cId) {
