@@ -8,5 +8,9 @@ function getCommentsHandler(e) {
  console.log("COMMENTS!!!")
 }
 
+function showCommentsBtn(){
+  
+}
 
-module.exports = { getCommentsHandler }
+
+module.exports = { getCommentsHandler, showCommentsBtn }

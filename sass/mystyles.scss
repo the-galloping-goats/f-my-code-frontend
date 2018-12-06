@@ -10,7 +10,6 @@ $matteBlack: #cccccc;
 
 
 
-
 #head {
 background-color: $purple;
 height: 60px;
@@ -40,7 +39,9 @@ url('/img/compRSZ.jpg') repeat;
 background-position: 0 auto;
 background-size: 0/50% auto;
 }
-
+#showposts {
+  color: $palegold;
+}
 /*
  *  CARD PANEL SETTINGS
  */
@@ -57,6 +58,17 @@ div.card-panel span {
 
 div.card-panel h3 {
   font-size: 27px;
+  
+}
+// div.card {
+//   background: rgba(253, 253, 253, 0.4);
+//   padding: 10px;
+//   margin: 100px;
+// }
+
+
+div.submit {
+  color: $eggshell;
 }
 
 div.card-panel a#read-comments {
@@ -65,23 +77,28 @@ div.card-panel a#read-comments {
 }
 
 code {
-  background: #333;
-  color: white;
+  background: rgba(253, 253, 253, 0.4);
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
-div.card-panel span.rating {
-  color: white;
-  font-size: 17px;
 
+div.card-panel {
+  background-color: rgba(253, 253, 253, 0.4);
+}
+#read-comments {
+  font-size: 20px;
+  color: $purple;
+}
+div.card-panel span.rating {
+  font-size: 17px;
   font-weight: bold;
   display: block;
   width: 45px;
   margin: auto;
   padding: 10px 17px;
-  background: #33ae99;
-  border-radius: 30px;
+  background: $lightpurple;
+  border-radius: 50px;
 }
 
 div.card-panel span.user {
