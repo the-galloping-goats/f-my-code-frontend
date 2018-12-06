@@ -34,6 +34,10 @@ function delComment(id, cId) {
   return axios.delete(heroku + "/posts/" + id + "/comments", cId)
 }
 
+function getRating(id) {
+  return axios.get(heroku + "/posts/" + id + "/rating")
+}
+
 module.exports = {
   getAllPosts,
   getAllComments,
@@ -41,6 +45,6 @@ module.exports = {
   createComment,
   updatePost,
   updateComment,
-  delPost,
+  // delPost,
   delComment
 }

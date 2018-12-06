@@ -44,9 +44,14 @@ body {
  */
 
 div.card-panel a#read-comments,
-div.card-panel code {
+div.card-panel code,
+div.card-panel span {
   display: block;
 }
+
+/* div.card-panel h3 {
+  display: inline-block;
+} */
 
 div.card-panel h3 {
   font-size: 27px;
@@ -62,4 +67,22 @@ code {
   color: white;
   padding: 10px;
   margin-top: 10px;
+}
+
+div.card-panel span.rating {
+  color: white;
+  font-size: 17px;
+
+  font-weight: bold;
+  display: block;
+  width: 45px;
+  margin: auto;
+  padding: 10px 17px;
+  background: #33ae99;
+  border-radius: 30px;
+}
+
+div.card-panel span.user {
+  font-weight: bold;
+  margin: 15px 0px;
 }

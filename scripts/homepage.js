@@ -28,7 +28,7 @@ getAllPosts()
   .catch(err => console.log(err))
 
 
-// getAllComments() 
+// getAllComments()
 //   .then((res) => {
 //     buildComments(res.data)
 //   })
@@ -43,9 +43,9 @@ getAllPosts()
 
 ////////////////////////////  UPDATE COMMENTS ///////////////////////////////////////
 
-// updateComment() 
+// updateComment()
 //   .then((res) => {
-
+//
 //   })
 
 

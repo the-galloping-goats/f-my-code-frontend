@@ -6,6 +6,7 @@
  *    id : "...",
  *    innerText: "...",
  *    attributes: ["...", "..."],
+ *    listeners: [{...}, {...}]
  *    children: ["...", "..."],
  *    class: ["...", "..."]
  *  }
@@ -33,6 +34,12 @@ function buildElement(type, features) {
 
   if (features.innerText) {
     el.innerText = features.innerText;
+  }
+
+  if (features.listeners) {
+    features.listeners.forEach(listener =>  {
+      el.addEventListener(listener.action, listener.callback)
+    });
   }
 
   if (features.children) {
