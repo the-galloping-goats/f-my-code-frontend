@@ -60,14 +60,12 @@ div.card-panel {
 
 div.card-panel span.rating {
   font-size: 17px;
-  font-weight: bold;
-  display: block;
-  width: 45px;
-  margin: auto;
-  padding: 10px 17px;
-  background: #505168;
-  border-radius: 50px; }
+  font-weight: bold; }
 
 div.card-panel span.user {
   font-weight: bold;
   margin: 15px 0px; }
+
+a.vote {
+  font-size: 40px;
+  display: inline; }

@@ -31,7 +31,6 @@ function getDeleteHandler(e){
     })
 }
 
-
 function removePostsDOM() {
   const allPosts = document.querySelector("#showPosts")
   while (allPosts.children > 0) {
@@ -39,6 +38,11 @@ function removePostsDOM() {
   }
 }
 
+function voteUp(e) {
+  const button = e.target;
+  const postId = button.getAttribute("data-post-id");
 
+  server.createRating({ rating: 1 }, postId);
+}
 
 module.exports = { getCommentsHandler, getDeleteHandler }

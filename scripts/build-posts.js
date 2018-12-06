@@ -7,6 +7,8 @@ const listeners = require("./btnEvents");
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
 
+const loggedIn = !!localStorage.getItem("token");
+
 function buildPosts() {
   server.getAllPosts()
     .then(posts => {
@@ -18,16 +20,9 @@ function buildPosts() {
 }
 
 function buildPanel({ id, user_id, description, code, title, username, rating }) {
-  
+
 
   const titleHTML = buildElement("h3", { innerText: title });
-  
-  const commButHTML = buildElement("a", {
-    id: "read-comments",
-    innerText: "Read Comments",
-    listeners: [
-      { action: "click", callback: listeners.getCommentsHandler }]
-  });
   const descHTML = buildElement("div", { innerText: description });
   const codeHTML = buildElement("code", { innerText: code });
   const userHTML = buildElement("span", {
@@ -41,20 +36,73 @@ function buildPanel({ id, user_id, description, code, title, username, rating })
   });
 
   const delButHTML = buildElement("a", {
-    id: "remove-post", 
+    id: "remove-post",
     innerText: "❌",
     listeners: [
       { action: "click", callback: listeners.getDeleteHandler }]
-      // class: ["hide"]
   });
 
-  const cardHTML = buildElement("div", { class: [ "card-panel" ],
-  attributes: { "data-post-id" : id , "data-user-id": user_id },
-  children: [ delButHTML ,ratingHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ]});
+  const commButHTML = buildElement("a", {
+    id: "read-comments",
+    innerText: "Read Comments",
+    listeners: [{
+      action: "click",
+      callback: listeners.getCommentsHandler
+    }]
+  });
 
-  const cellHTML = buildElement("div", { class: [ "col", "m12" ], children: [ cardHTML ]});
+  const upHTML = buildElement("a", {
+    innerText: "↑",
+    class: [ "vote", "upvote" ],
+    attributes: { "data-post-id": id },
+    listeners: [{
+      action: "click",
+      callback: listeners.voteUp
+    }]
+  });
 
-  const rowHTML = buildElement("div", { class: [ "row" ], children: [ cellHTML ]});
+  const downHTML = buildElement("a", {
+    innerText: "↓",
+    class: [ "vote", "downvote" ]
+  });
+
+  const votingHTML = [];
+
+  if (loggedIn) {
+    votingHTML.push(upHTML);
+    votingHTML.push(ratingHTML);
+    votingHTML.push(downHTML);
+  } else {
+    votingHTML.push(ratingHTML);
+  }
+
+  const voteWrapper = buildElement("div", {
+    class: [ "vote-wrapper" ],
+    children: votingHTML
+  });
+
+  const cardHTMLChild = [ delButHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ];
+
+  const cardHTML = buildElement("div", {
+    class: [ "" ],
+    attributes: { "data-post-id" : id },
+    children: cardHTMLChild
+  });
+
+  const contentCellHTML = buildElement("div", {
+    class: [ "col", "m11" ],
+    children: [ cardHTML ]
+  });
+
+  const voteCellHTML = buildElement("div", {
+    class: [ "col", "m1" ],
+    children: [ voteWrapper ]
+  });
+
+  const rowHTML = buildElement("div", {
+    class: [ "row", "card-panel" ],
+    children: [ voteCellHTML, contentCellHTML ]
+  });
 
   return rowHTML;
 }

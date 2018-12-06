@@ -34,6 +34,16 @@ function delComment(id, cId) {
   return axios.delete(heroku + "/posts/" + id + "/comments", cId)
 }
 
+function createRating(entry, id) {
+  const token = localStorage.getItem("token");
+  console.log(token);
+  return axios.post(
+    heroku + "/posts/" + id + "/ratings",
+    entry,
+    { headers: { Authorization: "bearer " + token }
+  });
+}
+
 function getRating(id) {
   return axios.get(heroku + "/posts/" + id + "/rating")
 }
@@ -46,5 +56,6 @@ module.exports = {
   updatePost,
   updateComment,
   delPost,
+  createRating,
   delComment
 }
