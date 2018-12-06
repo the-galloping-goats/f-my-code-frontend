@@ -17,72 +17,46 @@
   font-size: 40px;
   padding-left: 50px; }
 
-label {
-  color: #d1bf94;
-  font-size: 25px;
-}
-
-input {
-  color: #d7a674;
-  font-size:25px;
-}
-
-.submit {
-  color: #27233A
-}
-
 body {
   background: linear-gradient(rgba(204, 204, 204, 0.1), rgba(204, 204, 204, 0.1)), url("/img/compRSZ.jpg") repeat;
   background-position: 0 auto;
-  background-size: 0/50% auto;
-  background-attachment: fixed;
-}
-
+  background-size: 0/50% auto; }
 
 /*
  *  CARD PANEL SETTINGS
  */
-
 div.card-panel a#read-comments,
 div.card-panel code,
 div.card-panel span {
-  display: block;
-}
+  display: block; }
 
 /* div.card-panel h3 {
   display: inline-block;
 } */
-
 div.card-panel h3 {
-  font-size: 27px;
-}
+  font-size: 27px; }
 
 div.card-panel a#read-comments {
   margin-top: 50px;
-  text-align: center;
-}
+  text-align: center; }
 
 code {
   background: #333;
   color: white;
   padding: 10px;
-  margin-top: 10px;
-}
+  margin-top: 10px; }
 
 div.card-panel span.rating {
   color: white;
   font-size: 17px;
-
   font-weight: bold;
   display: block;
   width: 45px;
   margin: auto;
   padding: 10px 17px;
   background: #33ae99;
-  border-radius: 30px;
-}
+  border-radius: 30px; }
 
 div.card-panel span.user {
   font-weight: bold;
-  margin: 15px 0px;
-}
+  margin: 15px 0px; }
