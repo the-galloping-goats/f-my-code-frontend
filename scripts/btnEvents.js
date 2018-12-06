@@ -2,6 +2,7 @@ const buildComments = require("./build-comments");
 const server = require("./server");
 
 
+
 function getCommentsHandler(e) {
   const button = e.target
   const cardPanel = button.parentElement
@@ -22,8 +23,22 @@ function getCommentsHandler(e) {
   })
 
 }
-function showCommentsBtn() {
 
+function getDeleteHandler(e){
+  server.delPost(e.target.getAttribute('data-post-id'))
+    .then((res) => {
+      removePostsDOM(res.data)
+    })
 }
 
-module.exports = { getCommentsHandler, showCommentsBtn }
+
+function removePostsDOM() {
+  const allPosts = document.querySelector("#showPosts")
+  while (allPosts.children > 0) {
+    allPosts.children[0].remove()
+  }
+}
+
+
+
+module.exports = { getCommentsHandler, getDeleteHandler }
