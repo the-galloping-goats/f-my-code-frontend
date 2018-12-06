@@ -3,25 +3,28 @@ const buildElement = require("./utils")
 const btns = require("./btnEvents")
 
 
+
 function buildComments(comments) {
-  console.log(comments)
-  getCommentsHandler()
+  // console.log(comments);
 
-  postMessage.forEach(comment => {
-    listHTML.appendChild(buildCommentPanel(comment))
-    const unlistHTML = buildElement("ul", { children: [listHTML] })
-  });
+  const listHTML = buildElement("ul", { class: [ "comment-list" ] })
+  const commButHTML = buildElement("a", { id: "shrink-comments", innerText: "Shrink Comments" })
+
+  comments.forEach(comment => {
+
+    console.log(comment);
+
+    const userHTML = buildElement("h4", { innerText: comment.username })
+    const commHTML = buildElement("span", { innerText: comment.content })
+    const itemHTML = buildElement("li", { children: [userHTML, commHTML] })
+
+    listHTML.appendChild(itemHTML);
+  })
+
+  listHTML.appendChild(commButHTML);
+
+  return listHTML;
 }
 
-function buildCommentPanel({ id, username, comment }) {
-
-const userHTML = buildElement("h4", { innerText: username })
-const commHTML = buildElement("span", { innerText: comment })
-const commButHTML = buildElement("a", { id: "shrink-comments", innerText: "Shrink Comments" })
-
-const listHTML = buildElement("li", { children: [userHTML, commHTML, commButHTML] })
-
-return rowHTML;
-}
 
 module.exports = buildComments;

@@ -33,7 +33,9 @@ function buildPanel({ id, description, code, title, username, rating }) {
       { action: "click", callback: listeners.getCommentsHandler }]
   });
 
-  const cardHTML = buildElement("div", { class: [ "card-panel" ], children: [ ratingHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ]});
+  const cardHTML = buildElement("div", { class: [ "card-panel" ],
+  attributes: { "data-post-id" : id },
+  children: [ ratingHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ]});
 
   const cellHTML = buildElement("div", { class: [ "col", "m12" ], children: [ cardHTML ]});
 

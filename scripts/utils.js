@@ -15,7 +15,6 @@
  *  DOM
  */
 function buildElement(type, features) {
-  console.log(type);
   const el = document.createElement(type);
 
   if (features.id) {
@@ -27,9 +26,9 @@ function buildElement(type, features) {
   }
 
   if (features.attributes) {
-    features.attributes.forEach(property => {
-      el.setAttribute(attribute, features.attributes[property]);
-    });
+    for (attribute in features.attributes) {
+      el.setAttribute(attribute, features.attributes[attribute]);
+    }
   }
 
   if (features.innerText) {
