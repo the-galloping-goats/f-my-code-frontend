@@ -22,6 +22,8 @@ function getCommentsHandler(e) {
   })
 
 }
+function showCommentsBtn() {
 
+}
 
-module.exports = { getCommentsHandler }
+module.exports = { getCommentsHandler, showCommentsBtn }

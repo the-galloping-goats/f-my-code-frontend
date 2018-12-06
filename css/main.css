@@ -22,6 +22,9 @@ body {
   background-position: 0 auto;
   background-size: 0/50% auto; }
 
+#showposts {
+  color: #d1bf94; }
+
 /*
  *  CARD PANEL SETTINGS
  */
@@ -36,26 +39,34 @@ div.card-panel span {
 div.card-panel h3 {
   font-size: 27px; }
 
+div.submit {
+  color: #EAEFD3; }
+
 div.card-panel a#read-comments {
   margin-top: 50px;
   text-align: center; }
 
 code {
-  background: #333;
-  color: white;
+  background: rgba(253, 253, 253, 0.4);
   padding: 10px;
-  margin-top: 10px; }
+  margin-top: 30px; }
+
+div.card-panel {
+  background-color: rgba(253, 253, 253, 0.4); }
+
+#read-comments {
+  font-size: 20px;
+  color: #27233A; }
 
 div.card-panel span.rating {
-  color: white;
   font-size: 17px;
   font-weight: bold;
   display: block;
   width: 45px;
   margin: auto;
   padding: 10px 17px;
-  background: #33ae99;
-  border-radius: 30px; }
+  background: #505168;
+  border-radius: 50px; }
 
 div.card-panel span.user {
   font-weight: bold;
