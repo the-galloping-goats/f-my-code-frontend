@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:800|PT+Sans:700i|Playfair+Display:900|Roboto+Slab|VT323"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
-    <script defer src="/bundle.js"></script>
+    <script src="/newpost-bundle.js"></script>
 </head>
 
 <body>
@@ -29,25 +29,16 @@
     <div id="wrapperHeader">
         <div id="header">
             <h2 class='center-align' id='title'>Aggressive Alternative to StackOverflow.</h2>
-            <img alt="" id='headerImg' />
+            <img alt="" id='headerImg'/>
         </div>
     </div>
     <div class='container'>
-        <div class="card-panel">
-            <form name="post" id="post">
-                <label>Title:
-                    <input type="text" required>
-                </label>
+            <form id="newPost">
+                    <textarea class="newText" id="titleEdit" placeholder="Remember, be nice!" required></textarea>               
 
-                <label>Description:
-                    <input type="text">
-                </label>
+                    <textarea class="newText" id="description" placeholder="Description Here"  required></textarea>                
 
-                <label>Code:
-                    <input type="text">
-                </label>
-
-                <input class="submit" type="submit" name="submit">
+                    <textarea class="newText" id="code" placeholder="Code Here"  required></textarea>                
+                <input class="submit" id="fingclickme" type="submit" name="submit">
             </form>
-        </div>
     </div>

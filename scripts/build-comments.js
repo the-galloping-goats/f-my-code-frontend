@@ -1,11 +1,8 @@
-const axios = require("axios");
+// const axios = require("axios");
 const buildElement = require("./utils")
 const btns = require("./btnEvents")
 
-
-
 function buildComments(comments) {
-  // console.log(comments);
 
   const listHTML = buildElement("ul", { class: [ "comment-list" ] })
   const commButHTML = buildElement("a", { id: "shrink-comments", innerText: "Shrink Comments" })
@@ -23,6 +20,5 @@ function buildComments(comments) {
 
   return listHTML;
 }
-
 
 module.exports = buildComments;

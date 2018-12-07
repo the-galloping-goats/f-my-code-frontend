@@ -32,6 +32,11 @@ height: 60px;
   padding-left: 50px;
 }
 
+#postPage {
+  color: $eggshell;
+  background-color: $purple;
+}
+
 body {
 background: linear-gradient( transparentize($matteBlack, 0.90),
 transparentize($matteBlack, 0.90)),
@@ -60,12 +65,6 @@ div.card-panel h3 {
   font-size: 27px;
 
 }
-// div.card {
-//   background: rgba(253, 253, 253, 0.4);
-//   padding: 10px;
-//   margin: 100px;
-// }
-
 
 div.submit {
   color: $eggshell;
@@ -96,12 +95,6 @@ div.card-panel {
 div.card-panel span.rating {
   font-size: 17px;
   font-weight: bold;
-  // display: block;
-  // width: 45px;
-  // margin: auto;
-  // padding: 10px 17px;
-  // background: $lightpurple;
-  // border-radius: 50px;
 }
 
 div.card-panel span.user {
@@ -112,4 +105,10 @@ div.card-panel span.user {
 a.vote {
   font-size: 40px;
   display: inline;
+}
+
+textarea.newText {
+  height: 100px;
+  font-size: 20px;
+  background-color: rgba(253, 253, 253, 0.4); 
 }

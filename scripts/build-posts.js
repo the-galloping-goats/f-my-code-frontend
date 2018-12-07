@@ -2,7 +2,7 @@ const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
 const listeners = require("./btnEvents");
-// const userBtns = require("./homepage");
+const userBtns = require("./homepage");
 
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
@@ -13,7 +13,6 @@ function buildPosts() {
   server.getAllPosts()
     .then(posts => {
       posts.data.forEach(post => {
-        // hideBtns(user_id)
         postsDiv.appendChild(buildPanel(
           post,
           listeners.getDeleteHandler(buildPosts),

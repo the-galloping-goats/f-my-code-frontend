@@ -5,20 +5,20 @@ const server = require("./server");
 
 
 function getCommentsHandler(cb) {
-  return function(e) {
+  return function (e) {
     const button = e.target
     const cardPanel = button.parentElement
     const id = cardPanel.getAttribute("data-post-id")
 
     return server.getAllComments(id)
-    .then(res => {
-      console.log();
-      const comments = res.data;
-      const listHTML = buildComments(comments);
+      .then(res => {
+        console.log();
+        const comments = res.data;
+        const listHTML = buildComments(comments);
 
-      cardPanel.appendChild(listHTML);
+        cardPanel.appendChild(listHTML);
 
-    })
+      })
 
     button.forEach(el => {
 
@@ -26,15 +26,13 @@ function getCommentsHandler(cb) {
   }
 }
 
-function getDeleteHandler(cb){
-  return function(e){
-    console.log(e.target.getAttribute('data-post-id'));
-
+function getDeleteHandler(cb) {
+  return function (e) {
     server.delPost(e.target.getAttribute('data-post-id'))
-    .then((res) => {
-      removePostsDOM(res.data)
-      cb()
-    })
+      .then((res) => {
+        removePostsDOM(res.data)
+        cb()
+      })
   }
 }
 
@@ -46,12 +44,18 @@ function removePostsDOM() {
 }
 
 function voteUp(cb) {
-  return function(e) {
+  return function (e) {
     const button = e.target;
     const postId = button.getAttribute("data-post-id");
 
-    server.createRating({ rating: 1 }, postId)
+    server.createRating({
+      rating: 1
+    }, postId)
   }
 }
 
-module.exports = { getCommentsHandler, getDeleteHandler, voteUp }
+  module.exports = {
+    getCommentsHandler,
+    getDeleteHandler,
+    voteUp
+  }
