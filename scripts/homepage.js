@@ -9,17 +9,11 @@ const {
 } = require('./server')
 
 // if (window.location.href === 'http://127.0.0.1:8080/html/newpost.html'){
-//  newpost.create() 
+//  newpost.create()
 // }
-if (window.location.href === "http://127.0.0.1:8080/") {
+// if (window.location.href === "http://127.0.0.1:8080/") {
 
-<<<<<<< HEAD
 getAllPosts()
-=======
-////////////////////////////  GET ALL ////////////////////////////////////////
-// console.log(window.location.href);
-  getAllPosts()
->>>>>>> tidied up comments
   .then((res) => {
     buildPosts(res.data)
     document.querySelector("#postPage").addEventListener('click', (e) => {
@@ -27,8 +21,6 @@ getAllPosts()
      })
   })
   .catch(err => console.log(err))
-<<<<<<< HEAD
-=======
 
 
 ////////////////////////////  UPDATE POSTS ////////////////////////////////////////
@@ -59,7 +51,6 @@ function hideBtns() {
     document.querySelector("#remove-post").classList.remove("hide")
     document.querySelector("#edit-post").classList.remove("hide")
   }
->>>>>>> tidied up comments
 }
 
 // function hideBtns() {

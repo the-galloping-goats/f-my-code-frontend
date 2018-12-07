@@ -1630,82 +1630,105 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],28:[function(require,module,exports){
-const buildPosts = require("./build-posts");
 const buildComments = require("./build-comments");
 const server = require("./server");
 
 
 
-function getCommentsHandler(cb) {
-  return function (e) {
+function getCommentsHandler(buildPosts) {
+  return function(e) {
     const button = e.target
     const cardPanel = button.parentElement
     const id = cardPanel.getAttribute("data-post-id")
 
     return server.getAllComments(id)
       .then(res => {
-        console.log();
         const comments = res.data;
         const listHTML = buildComments(comments);
 
         cardPanel.appendChild(listHTML);
 
       })
-
-    button.forEach(el => {
-
-    })
   }
 }
 
-function getDeleteHandler(cb) {
-  return function (e) {
+function getDeleteHandler(buildPosts){
+  return function(e){
     server.delPost(e.target.getAttribute('data-post-id'))
-      .then((res) => {
-        removePostsDOM(res.data)
-        cb()
-      })
+    .then((res) => {
+      removePostsDOM(res.data)
+      buildPosts()
+    })
   }
 }
 
 function removePostsDOM() {
   const allPosts = document.querySelector("#showPosts")
-  while (allPosts.children > 0) {
+  while (allPosts.children.length > 0) {
     allPosts.children[0].remove()
   }
 }
 
-function voteUp(cb) {
-  return function (e) {
+function voteUp(buildPosts) {
+  return function(e) {
     const button = e.target;
     const postId = button.getAttribute("data-post-id");
 
-    server.createRating({
-      rating: 1
-    }, postId)
+    server.createRating({ rating: 1 }, postId)
+      .then(() => {
+        removePostsDOM();
+        buildPosts();
+      })
   }
 }
 
-  module.exports = {
-    getCommentsHandler,
-    getDeleteHandler,
-    voteUp
+function voteDown(buildPosts) {
+  return function(e) {
+    const button = e.target;
+    const postId = button.getAttribute("data-post-id");
+
+    server.createRating({ rating: -1 }, postId)
+      .then(() => {
+        removePostsDOM();
+        buildPosts();
+      });
   }
-},{"./build-comments":29,"./build-posts":30,"./server":34}],29:[function(require,module,exports){
+}
+
+module.exports = { getCommentsHandler, getDeleteHandler, voteUp, voteDown }
+
+},{"./build-comments":29,"./server":33}],29:[function(require,module,exports){
 // const axios = require("axios");
 const buildElement = require("./utils")
 const btns = require("./btnEvents")
+const listeners = require("./btnEvents")
 
 function buildComments(comments) {
 
   const listHTML = buildElement("ul", { class: [ "comment-list" ] })
-  const commButHTML = buildElement("a", { id: "shrink-comments", innerText: "Shrink Comments" })
+  const commButHTML = buildElement("a", {
+    id: "shrink-comments",
+    class: [ "more-or-less" ],
+    innerText: "Shrink Comments",
+    listeners: [{
+      action: "click",
+      callback: listeners.shrinkComments
+    }]
+  });
 
   comments.forEach(comment => {
 
-    const userHTML = buildElement("h4", { innerText: comment.username })
-    const commHTML = buildElement("span", { innerText: comment.content })
-    const itemHTML = buildElement("li", { children: [userHTML, commHTML] })
+    const userHTML = buildElement("h4", {
+      innerText: comment.username
+    })
+
+    const commHTML = buildElement("span", {
+      innerText: comment.content
+    })
+
+    const itemHTML = buildElement("li", {
+      children: [userHTML, commHTML]
+    })
 
     listHTML.appendChild(itemHTML);
   })
@@ -1717,12 +1740,11 @@ function buildComments(comments) {
 
 module.exports = buildComments;
 
-},{"./btnEvents":28,"./utils":35}],30:[function(require,module,exports){
+},{"./btnEvents":28,"./utils":34}],30:[function(require,module,exports){
 const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
 const listeners = require("./btnEvents");
-const userBtns = require("./homepage");
 
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
@@ -1737,15 +1759,16 @@ function buildPosts() {
           post,
           listeners.getDeleteHandler(buildPosts),
           listeners.getCommentsHandler(buildPosts),
-          listeners.voteUp(buildPosts)
+          listeners.voteUp(buildPosts),
+          listeners.voteDown(buildPosts)
         ));
       })
     })
 }
 
-function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp) {
+function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, voteDown) {
 
-
+  // const voted = getVoted();
   const titleHTML = buildElement("h3", { innerText: title });
   const descHTML = buildElement("div", { innerText: description });
   const codeHTML = buildElement("code", { innerText: code });
@@ -1769,6 +1792,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
   const commButHTML = buildElement("a", {
     id: "read-comments",
+    class: [ "more-or-less" ],
     innerText: "Read Comments",
     listeners: [{
       action: "click",
@@ -1788,8 +1812,15 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
   const downHTML = buildElement("a", {
     innerText: "↓",
-    class: [ "vote", "downvote" ]
+    class: [ "vote", "downvote" ],
+    attributes: { "data-post-id": id },
+    listeners: [{
+      action: "click",
+      callback: voteDown
+    }]
   });
+
+
 
   const votingHTML = [];
 
@@ -1834,55 +1865,12 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
 module.exports = buildPosts;
 
-},{"./btnEvents":28,"./homepage":31,"./server":34,"./utils":35,"axios":1}],31:[function(require,module,exports){
-const buildPosts = require("./build-posts");
-// const server = "localhost:3000";
-const axios = require("axios")
-const newpost = require("./postForm.js")
-
-const {
-  getAllPosts
-
-} = require('./server')
-
-// if (window.location.href === 'http://127.0.0.1:8080/html/newpost.html'){
-//  newpost.create() 
-// }
-if (window.location.href === "http://127.0.0.1:8080/") {
-
-getAllPosts()
-  .then((res) => {
-    buildPosts(res.data)
-    document.querySelector("#postPage").addEventListener('click', (e) => {
-       window.location.replace("http://127.0.0.1:8080/html/newpost.html")
-     })
-  })
-  .catch(err => console.log(err))
-}
-
-// function hideBtns() {
-//   const loggedIn = !!localStorage.getItem("token")
-//   const userId = localStorage.getItem("user_id")
-//   const postId = document.querySelectorAll("#id").getAttribute("data-post-id")
-
-//   if (loggedIn) {
-//     document.querySelector("#rating").classList.remove("hide")
-//     document.querySelector("#createPost").classList.remove("hide")
-//   }
-
-//   if (loggedIn && userId === postId) {
-//     document.querySelector("#remove-post").classList.remove("hide")
-//     document.querySelector("#edit-post").classList.remove("hide")
-//   }
-// }
-
-document.addEventListener("DOMContentLoaded", getAllPosts);
-
-},{"./build-posts":30,"./postForm.js":33,"./server":34,"axios":1}],32:[function(require,module,exports){
+},{"./btnEvents":28,"./server":33,"./utils":34,"axios":1}],31:[function(require,module,exports){
 const newForm = require("./postForm");
 
 document.addEventListener("DOMContentLoaded", newForm.create);
-},{"./postForm":33}],33:[function(require,module,exports){
+
+},{"./postForm":32}],32:[function(require,module,exports){
 const buildPosts = require("./build-posts");
 const server = require("./server")
 
@@ -1900,8 +1888,8 @@ function create() {
 
     fingWork.addEventListener('submit', (e) => {
         e.preventDefault()
-       
-        
+
+
         const newPost = {
             title: title.value,
             description: description.value,
@@ -1937,7 +1925,8 @@ function create() {
 // }
 
 module.exports = { create  }
-},{"./build-posts":30,"./server":34}],34:[function(require,module,exports){
+
+},{"./build-posts":30,"./server":33}],33:[function(require,module,exports){
 const axios = require('axios')
 const heroku = "http://localhost:3000";
 
@@ -1987,7 +1976,6 @@ function delComment(id, cId) {
 
 function createRating(entry, id) {
   const token = localStorage.getItem("token");
-  console.log(token);
   return axios.post(
     heroku + "/posts/" + id + "/ratings",
     entry, {
@@ -1999,6 +1987,10 @@ function createRating(entry, id) {
 
 function getRating(id) {
   return axios.get(heroku + "/posts/" + id + "/rating")
+}
+
+function votes() {
+
 }
 
 module.exports = {
@@ -2013,7 +2005,7 @@ module.exports = {
   delComment
 }
 
-},{"axios":1}],35:[function(require,module,exports){
+},{"axios":1}],34:[function(require,module,exports){
 /*
  *  Takes a string, type, which is the type of element and an object
  *  which configures the element.
@@ -2068,4 +2060,4 @@ function buildElement(type, features) {
 
 module.exports = buildElement;
 
-},{}]},{},[32]);
+},{}]},{},[31]);

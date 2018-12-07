@@ -2,10 +2,6 @@ const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
 const listeners = require("./btnEvents");
-<<<<<<< HEAD
-const userBtns = require("./homepage");
-=======
->>>>>>> tidied up comments
 
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
