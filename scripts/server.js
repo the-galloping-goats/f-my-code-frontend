@@ -6,6 +6,10 @@ function getAllPosts() {
   return axios.get(heroku + "/posts")
 }
 
+function createUser() {
+  return axios.get(heroku + "/users")
+}
+
 function getAllComments(id) {
   return axios.get(heroku + "/posts/" + id + "/comments")
 }
