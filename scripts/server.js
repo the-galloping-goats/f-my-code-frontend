@@ -24,7 +24,14 @@ function createComment(id, newComment) {
 }
 
 function updatePost(id, newPost) {
-  return axios.put(heroku + "/posts/" + id, newPost)
+  console.log(newPost);
+  
+  const token = localStorage.getItem("token")
+  return axios.put(heroku + "/posts/" + id, newPost, {
+    headers: {
+      Authorization: "bearer " + token
+    }
+  })
 }
 
 function updateComment(id, newComment) {

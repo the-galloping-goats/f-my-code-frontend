@@ -25,7 +25,7 @@ function create() {
 
         server.createPost(newPost)
             .then((res) => {
-                console.log("I did it!");
+                // console.log("I did it!");
                 window.location.href = "http://127.0.0.1:8080/"
             })
             .catch(function (err) {

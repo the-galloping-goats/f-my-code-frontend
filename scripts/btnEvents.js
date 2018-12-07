@@ -1,5 +1,6 @@
 const buildComments = require("./build-comments");
 const server = require("./server");
+const edit = require("./edit")
 
 
 
@@ -20,12 +21,31 @@ function getCommentsHandler(buildPosts) {
   }
 }
 
-function getDeleteHandler(buildPosts){
-  return function(e){
+
+function editBtnHandler(cb){
+  return function (e) {
+    const panelCard = e.target.parentElement
+    const id = e.target.getAttribute("data-post-id")
+
+    const titleHTML = panelCard.querySelector(".title-data")
+    const descHTML = panelCard.querySelector(".desc-data")
+    const codeHTML = panelCard.querySelector(".code-data")
+
+    const editArea = edit(titleHTML, descHTML, codeHTML, id, cb)
+    panelCard.insertBefore(editArea, titleHTML)
+
+    titleHTML.remove(), descHTML.remove(), descHTML.remove(), codeHTML.remove()
+
+  }
+}
+
+
+function getDeleteHandler(cb) {
+  return function (e) {
     server.delPost(e.target.getAttribute('data-post-id'))
     .then((res) => {
       removePostsDOM(res.data)
-      buildPosts()
+      cb()
     })
   }
 }
@@ -63,4 +83,10 @@ function voteDown(buildPosts) {
   }
 }
 
-module.exports = { getCommentsHandler, getDeleteHandler, voteUp, voteDown }
+  module.exports = {
+    getCommentsHandler,
+    getDeleteHandler,
+    voteUp,
+    voteDown,
+    editBtnHandler
+  }

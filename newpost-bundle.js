@@ -1632,6 +1632,7 @@ process.umask = function() { return 0; };
 },{}],28:[function(require,module,exports){
 const buildComments = require("./build-comments");
 const server = require("./server");
+const edit = require("./edit")
 
 
 
@@ -1652,12 +1653,31 @@ function getCommentsHandler(buildPosts) {
   }
 }
 
-function getDeleteHandler(buildPosts){
-  return function(e){
+
+function editBtnHandler(cb){
+  return function (e) {
+    const panelCard = e.target.parentElement
+    const id = e.target.getAttribute("data-post-id")
+
+    const titleHTML = panelCard.querySelector(".title-data")
+    const descHTML = panelCard.querySelector(".desc-data")
+    const codeHTML = panelCard.querySelector(".code-data")
+
+    const editArea = edit(titleHTML, descHTML, codeHTML, id, cb)
+    panelCard.insertBefore(editArea, titleHTML)
+
+    titleHTML.remove(), descHTML.remove(), descHTML.remove(), codeHTML.remove()
+
+  }
+}
+
+
+function getDeleteHandler(cb) {
+  return function (e) {
     server.delPost(e.target.getAttribute('data-post-id'))
     .then((res) => {
       removePostsDOM(res.data)
-      buildPosts()
+      cb()
     })
   }
 }
@@ -1695,9 +1715,15 @@ function voteDown(buildPosts) {
   }
 }
 
-module.exports = { getCommentsHandler, getDeleteHandler, voteUp, voteDown }
+  module.exports = {
+    getCommentsHandler,
+    getDeleteHandler,
+    voteUp,
+    voteDown,
+    editBtnHandler
+  }
 
-},{"./build-comments":29,"./server":33}],29:[function(require,module,exports){
+},{"./build-comments":29,"./edit":31,"./server":34}],29:[function(require,module,exports){
 // const axios = require("axios");
 const buildElement = require("./utils")
 const btns = require("./btnEvents")
@@ -1740,7 +1766,7 @@ function buildComments(comments) {
 
 module.exports = buildComments;
 
-},{"./btnEvents":28,"./utils":34}],30:[function(require,module,exports){
+},{"./btnEvents":28,"./utils":35}],30:[function(require,module,exports){
 const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
@@ -1754,24 +1780,29 @@ const loggedIn = !!localStorage.getItem("token");
 function buildPosts() {
   server.getAllPosts()
     .then(posts => {
+      const allPosts = document.querySelector("#showPosts")
+      while (allPosts.children.length > 0) {
+        allPosts.children[0].remove()
+      }
       posts.data.forEach(post => {
         postsDiv.appendChild(buildPanel(
           post,
           listeners.getDeleteHandler(buildPosts),
           listeners.getCommentsHandler(buildPosts),
           listeners.voteUp(buildPosts),
-          listeners.voteDown(buildPosts)
+          listeners.voteDown(buildPosts),
+          listeners.editBtnHandler(buildPosts)
         ));
       })
     })
 }
 
-function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, voteDown) {
+function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, voteDown, editBtnHandler) {
 
-  // const voted = getVoted();
-  const titleHTML = buildElement("h3", { innerText: title });
-  const descHTML = buildElement("div", { innerText: description });
-  const codeHTML = buildElement("code", { innerText: code });
+
+  const titleHTML = buildElement("h3", { innerText: title, class: ["title-data"] });
+  const descHTML = buildElement("div", { innerText: description, class: ["desc-data"] });
+  const codeHTML = buildElement("code", { innerText: code, class: ["code-data"] });
   const userHTML = buildElement("span", {
     innerText: username,
     class: [ "user" ]
@@ -1788,6 +1819,13 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
     attributes: {"data-post-id": id },
     listeners: [
       { action: "click", callback: getDeleteHandler }]
+  });
+  const editButHTML = buildElement("a", {
+    id: "remove-post",
+    innerText: " ✏️",
+    attributes: {"data-post-id": id },
+    listeners: [
+      { action: "click", callback: editBtnHandler }]
   });
 
   const commButHTML = buildElement("a", {
@@ -1837,7 +1875,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
     children: votingHTML
   });
 
-  const cardHTMLChild = [ delButHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ];
+  const cardHTMLChild = [ delButHTML, editButHTML,titleHTML, userHTML, descHTML, codeHTML, commButHTML ];
 
   const cardHTML = buildElement("div", {
     class: [ "" ],
@@ -1865,12 +1903,72 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
 module.exports = buildPosts;
 
-},{"./btnEvents":28,"./server":33,"./utils":34,"axios":1}],31:[function(require,module,exports){
+},{"./btnEvents":28,"./server":34,"./utils":35,"axios":1}],31:[function(require,module,exports){
+const buildElement = require("./utils")
+const server = require("./server")
+
+
+function editPost(titleHTML, descHTML, codeHTML, id, cb) {
+  // console.log(titleHTML)
+  const title = titleHTML.innerText
+  const description = descHTML.innerText
+  const code = codeHTML.innerText
+
+  console.log(title, description, code)
+
+  const titleInput = buildElement("input", {
+    attributes: { value: title }
+  });
+  const descInput = buildElement("textarea", {
+    innerText: description
+  })
+  const codeInput = buildElement("textarea", {
+    innerText: code
+  })
+  const submitButHTML = buildElement("a", {
+    class: ["btn"],
+    id: "edit-submit",
+    innerText: "Submit",
+    listeners: [{
+      action: "click",
+      callback: (e) => {
+        server.updatePost(id, { 
+          title: titleInput.value, 
+          description: descInput.value, 
+          code: codeInput.value})
+        .then((res) => {
+          cb();
+        })
+        .catch(err => console.log(err))
+      }
+    }]
+    });
+
+    return buildElement("div", {
+      children: [ titleInput, descInput, codeInput, submitButHTML ]
+    })
+    
+   
+    
+  // const editForm = buildElement("form", {
+  //   children:[titleInput, descInput, codeInput, submitButHTML], listeners: [{
+  //     action: "submit",
+  //     callback: formEditHandler
+  //   }]
+  // })
+}
+
+// function formEditHandler(e){
+//   server.uppdatePost()
+// }
+
+module.exports = editPost;
+},{"./server":34,"./utils":35}],32:[function(require,module,exports){
 const newForm = require("./postForm");
 
 document.addEventListener("DOMContentLoaded", newForm.create);
 
-},{"./postForm":32}],32:[function(require,module,exports){
+},{"./postForm":33}],33:[function(require,module,exports){
 const buildPosts = require("./build-posts");
 const server = require("./server")
 
@@ -1898,7 +1996,7 @@ function create() {
 
         server.createPost(newPost)
             .then((res) => {
-                console.log("I did it!");
+                // console.log("I did it!");
                 window.location.href = "http://127.0.0.1:8080/"
             })
             .catch(function (err) {
@@ -1926,7 +2024,7 @@ function create() {
 
 module.exports = { create  }
 
-},{"./build-posts":30,"./server":33}],33:[function(require,module,exports){
+},{"./build-posts":30,"./server":34}],34:[function(require,module,exports){
 const axios = require('axios')
 const heroku = "http://localhost:3000";
 
@@ -1953,7 +2051,14 @@ function createComment(id, newComment) {
 }
 
 function updatePost(id, newPost) {
-  return axios.put(heroku + "/posts/" + id, newPost)
+  console.log(newPost);
+  
+  const token = localStorage.getItem("token")
+  return axios.put(heroku + "/posts/" + id, newPost, {
+    headers: {
+      Authorization: "bearer " + token
+    }
+  })
 }
 
 function updateComment(id, newComment) {
@@ -2005,7 +2110,7 @@ module.exports = {
   delComment
 }
 
-},{"axios":1}],34:[function(require,module,exports){
+},{"axios":1}],35:[function(require,module,exports){
 /*
  *  Takes a string, type, which is the type of element and an object
  *  which configures the element.
@@ -2060,4 +2165,4 @@ function buildElement(type, features) {
 
 module.exports = buildElement;
 
-},{}]},{},[31]);
+},{}]},{},[32]);
