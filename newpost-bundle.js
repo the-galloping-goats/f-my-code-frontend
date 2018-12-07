@@ -1633,6 +1633,7 @@ process.umask = function() { return 0; };
 const buildPosts = require("./build-posts");
 const buildComments = require("./build-comments");
 const server = require("./server");
+const edit = require("./edit")
 
 
 
@@ -1657,6 +1658,25 @@ function getCommentsHandler(cb) {
     })
   }
 }
+
+
+function editBtnHandler(cb){
+  return function (e) {
+    const panelCard = e.target.parentElement
+    const id = e.target.getAttribute("data-post-id")
+
+    const titleHTML = panelCard.querySelector(".title-data")
+    const descHTML = panelCard.querySelector(".desc-data")
+    const codeHTML = panelCard.querySelector(".code-data")
+
+    const editArea = edit(titleHTML, descHTML, codeHTML, id, cb)
+    panelCard.insertBefore(editArea, titleHTML)
+
+    titleHTML.remove(), descHTML.remove(), descHTML.remove(), codeHTML.remove()
+    
+  }
+}
+
 
 function getDeleteHandler(cb) {
   return function (e) {
@@ -1689,9 +1709,10 @@ function voteUp(cb) {
   module.exports = {
     getCommentsHandler,
     getDeleteHandler,
-    voteUp
+    voteUp,
+    editBtnHandler
   }
-},{"./build-comments":29,"./build-posts":30,"./server":34}],29:[function(require,module,exports){
+},{"./build-comments":29,"./build-posts":30,"./edit":31,"./server":34}],29:[function(require,module,exports){
 // const axios = require("axios");
 const buildElement = require("./utils")
 const btns = require("./btnEvents")
@@ -1722,7 +1743,6 @@ const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
 const listeners = require("./btnEvents");
-const userBtns = require("./homepage");
 
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
@@ -1732,23 +1752,28 @@ const loggedIn = !!localStorage.getItem("token");
 function buildPosts() {
   server.getAllPosts()
     .then(posts => {
+      const allPosts = document.querySelector("#showPosts")
+      while (allPosts.children.length > 0) {
+        allPosts.children[0].remove()
+      }
       posts.data.forEach(post => {
         postsDiv.appendChild(buildPanel(
           post,
           listeners.getDeleteHandler(buildPosts),
           listeners.getCommentsHandler(buildPosts),
-          listeners.voteUp(buildPosts)
+          listeners.voteUp(buildPosts),
+          listeners.editBtnHandler(buildPosts)
         ));
       })
     })
 }
 
-function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp) {
+function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, editBtnHandler) {
 
 
-  const titleHTML = buildElement("h3", { innerText: title });
-  const descHTML = buildElement("div", { innerText: description });
-  const codeHTML = buildElement("code", { innerText: code });
+  const titleHTML = buildElement("h3", { innerText: title, class: ["title-data"] });
+  const descHTML = buildElement("div", { innerText: description, class: ["desc-data"] });
+  const codeHTML = buildElement("code", { innerText: code, class: ["code-data"] });
   const userHTML = buildElement("span", {
     innerText: username,
     class: [ "user" ]
@@ -1765,6 +1790,13 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
     attributes: {"data-post-id": id },
     listeners: [
       { action: "click", callback: getDeleteHandler }]
+  });
+  const editButHTML = buildElement("a", {
+    id: "remove-post",
+    innerText: " ✏️",
+    attributes: {"data-post-id": id },
+    listeners: [
+      { action: "click", callback: editBtnHandler }]
   });
 
   const commButHTML = buildElement("a", {
@@ -1806,7 +1838,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
     children: votingHTML
   });
 
-  const cardHTMLChild = [ delButHTML, titleHTML, userHTML, descHTML, codeHTML, commButHTML ];
+  const cardHTMLChild = [ delButHTML, editButHTML,titleHTML, userHTML, descHTML, codeHTML, commButHTML ];
 
   const cardHTML = buildElement("div", {
     class: [ "" ],
@@ -1834,60 +1866,73 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
 module.exports = buildPosts;
 
-},{"./btnEvents":28,"./homepage":31,"./server":34,"./utils":35,"axios":1}],31:[function(require,module,exports){
-const buildPosts = require("./build-posts");
-// const server = "localhost:3000";
-const axios = require("axios")
-const newpost = require("./postForm.js")
+},{"./btnEvents":28,"./server":34,"./utils":35,"axios":1}],31:[function(require,module,exports){
+const buildElement = require("./utils")
+const server = require("./server")
 
-const {
-  getAllPosts
 
-} = require('./server')
+function editPost(titleHTML, descHTML, codeHTML, id, cb) {
+  // console.log(titleHTML)
+  const title = titleHTML.innerText
+  const description = descHTML.innerText
+  const code = codeHTML.innerText
 
-// if (window.location.href === 'http://127.0.0.1:8080/html/newpost.html'){
-//  newpost.create() 
-// }
-if (window.location.href === "http://127.0.0.1:8080/") {
+  console.log(title, description, code)
 
-getAllPosts()
-  .then((res) => {
-    buildPosts(res.data)
-    document.querySelector("#postPage").addEventListener('click', (e) => {
-       window.location.replace("http://127.0.0.1:8080/html/newpost.html")
-     })
+  const titleInput = buildElement("input", {
+    attributes: { value: title }
+  });
+  const descInput = buildElement("textarea", {
+    innerText: description
   })
-  .catch(err => console.log(err))
+  const codeInput = buildElement("textarea", {
+    innerText: code
+  })
+  const submitButHTML = buildElement("a", {
+    class: ["btn"],
+    id: "edit-submit",
+    innerText: "Submit",
+    listeners: [{
+      action: "click",
+      callback: (e) => {
+        server.updatePost(id, { 
+          title: titleInput.value, 
+          description: descInput.value, 
+          code: codeInput.value})
+        .then((res) => {
+          cb();
+        })
+        .catch(err => console.log(err))
+      }
+    }]
+    });
+
+    return buildElement("div", {
+      children: [ titleInput, descInput, codeInput, submitButHTML ]
+    })
+    
+   
+    
+  // const editForm = buildElement("form", {
+  //   children:[titleInput, descInput, codeInput, submitButHTML], listeners: [{
+  //     action: "submit",
+  //     callback: formEditHandler
+  //   }]
+  // })
 }
 
-// function hideBtns() {
-//   const loggedIn = !!localStorage.getItem("token")
-//   const userId = localStorage.getItem("user_id")
-//   const postId = document.querySelectorAll("#id").getAttribute("data-post-id")
-
-//   if (loggedIn) {
-//     document.querySelector("#rating").classList.remove("hide")
-//     document.querySelector("#createPost").classList.remove("hide")
-//   }
-
-//   if (loggedIn && userId === postId) {
-//     document.querySelector("#remove-post").classList.remove("hide")
-//     document.querySelector("#edit-post").classList.remove("hide")
-//   }
+// function formEditHandler(e){
+//   server.uppdatePost()
 // }
 
-document.addEventListener("DOMContentLoaded", getAllPosts);
-
-},{"./build-posts":30,"./postForm.js":33,"./server":34,"axios":1}],32:[function(require,module,exports){
+module.exports = editPost;
+},{"./server":34,"./utils":35}],32:[function(require,module,exports){
 const newForm = require("./postForm");
 
 document.addEventListener("DOMContentLoaded", newForm.create);
 },{"./postForm":33}],33:[function(require,module,exports){
 const buildPosts = require("./build-posts");
 const server = require("./server")
-
-
-
 
 
 
@@ -1910,12 +1955,8 @@ function create() {
 
         server.createPost(newPost)
             .then((res) => {
-                console.log("I did it!");
                 window.location.href = "http://127.0.0.1:8080/"
-            })
-            .catch(function (err) {
-                document.querySelector('#error').classList.remove('hide-auth-error')
-            })
+            })   
     })
 }
 
@@ -1924,19 +1965,16 @@ function create() {
 //     updatePost(this.getAttribute('data-post-id'), {
 //         title: title.value,
 //         content: content.value
-//       }).then((res) => {
+//         }).then((res) => {
 
 //         createPosts(newPost)
 //             .then((res) => {
 //                 window.location.replace("http://127.0.0.1:8080/")
-//             })
-//             .catch(function (err) {
-//                 document.querySelector('#error').classList.remove('hide-auth-error')
-//             })
+//             }) 
 //     })
 // }
 
-module.exports = { create  }
+module.exports = { create }
 },{"./build-posts":30,"./server":34}],34:[function(require,module,exports){
 const axios = require('axios')
 const heroku = "http://localhost:3000";
@@ -1964,7 +2002,14 @@ function createComment(id, newComment) {
 }
 
 function updatePost(id, newPost) {
-  return axios.put(heroku + "/posts/" + id, newPost)
+  console.log(newPost);
+  
+  const token = localStorage.getItem("token")
+  return axios.put(heroku + "/posts/" + id, newPost, {
+    headers: {
+      Authorization: "bearer " + token
+    }
+  })
 }
 
 function updateComment(id, newComment) {

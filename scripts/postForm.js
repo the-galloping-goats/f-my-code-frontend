@@ -3,9 +3,6 @@ const server = require("./server")
 
 
 
-
-
-
 function create() {
 
     const fingWork = document.getElementById('newPost')
@@ -25,12 +22,8 @@ function create() {
 
         server.createPost(newPost)
             .then((res) => {
-                console.log("I did it!");
                 window.location.href = "http://127.0.0.1:8080/"
-            })
-            .catch(function (err) {
-                document.querySelector('#error').classList.remove('hide-auth-error')
-            })
+            })   
     })
 }
 
@@ -39,16 +32,13 @@ function create() {
 //     updatePost(this.getAttribute('data-post-id'), {
 //         title: title.value,
 //         content: content.value
-//       }).then((res) => {
+//         }).then((res) => {
 
 //         createPosts(newPost)
 //             .then((res) => {
 //                 window.location.replace("http://127.0.0.1:8080/")
-//             })
-//             .catch(function (err) {
-//                 document.querySelector('#error').classList.remove('hide-auth-error')
-//             })
+//             }) 
 //     })
 // }
 
-module.exports = { create  }
+module.exports = { create }

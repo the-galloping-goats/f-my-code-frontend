@@ -1,6 +1,7 @@
 const buildPosts = require("./build-posts");
 const buildComments = require("./build-comments");
 const server = require("./server");
+const edit = require("./edit")
 
 
 
@@ -25,6 +26,25 @@ function getCommentsHandler(cb) {
     })
   }
 }
+
+
+function editBtnHandler(cb){
+  return function (e) {
+    const panelCard = e.target.parentElement
+    const id = e.target.getAttribute("data-post-id")
+
+    const titleHTML = panelCard.querySelector(".title-data")
+    const descHTML = panelCard.querySelector(".desc-data")
+    const codeHTML = panelCard.querySelector(".code-data")
+
+    const editArea = edit(titleHTML, descHTML, codeHTML, id, cb)
+    panelCard.insertBefore(editArea, titleHTML)
+
+    titleHTML.remove(), descHTML.remove(), descHTML.remove(), codeHTML.remove()
+    
+  }
+}
+
 
 function getDeleteHandler(cb) {
   return function (e) {
@@ -57,5 +77,6 @@ function voteUp(cb) {
   module.exports = {
     getCommentsHandler,
     getDeleteHandler,
-    voteUp
+    voteUp,
+    editBtnHandler
   }
