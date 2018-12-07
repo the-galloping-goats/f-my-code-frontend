@@ -17,13 +17,14 @@ function buildPosts() {
           post,
           listeners.getDeleteHandler(buildPosts),
           listeners.getCommentsHandler(buildPosts),
-          listeners.voteUp(buildPosts)
+          listeners.voteUp(buildPosts),
+          listeners.voteDown(buildPosts)
         ));
       })
     })
 }
 
-function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp) {
+function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, voteDown) {
 
 
   const titleHTML = buildElement("h3", { innerText: title });
@@ -68,7 +69,12 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
   const downHTML = buildElement("a", {
     innerText: "↓",
-    class: [ "vote", "downvote" ]
+    class: [ "vote", "downvote" ],
+    attributes: { "data-post-id": id },
+    listeners: [{
+      action: "click",
+      callback: voteDown
+    }]
   });
 
   const votingHTML = [];
