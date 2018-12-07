@@ -6,10 +6,6 @@
   "scripts": {
     "build": "browserify scripts/homepage.js -o bundle.js",
     "watch": "watchify -d scripts/homepage.js -o bundle.js",
-<<<<<<< Updated upstream
-    "dev-server": "live-server .",
-    "dev": "run-all \"npm run watch\" \"npm run dev-server\" \"npm run css-watch\"",
-=======
     "build-newpost": "browserify scripts/newpost.js -o newpost-bundle.js",
     "watch-newpost": "watchify scripts/newpost.js -o newpost-bundle.js",
     "build-login": "browserify scripts/login.js -o login-bundle.js",
@@ -18,7 +14,6 @@
     "watch-signup": "watchify scripts/reqSU.js -o signup-bundle.js",
     "dev-server": "live-server .",
     "dev": "run-all \"npm run watch\" \"npm run dev-server\" \"npm run css-watch\" \"npm run build-newpost\" \"npm run watch-newpost\" \"npm run build-signup\" \"npm run watch-signup\" ",
->>>>>>> Stashed changes
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/main.css",
     "css-watch": "npm run css-build -- --watch",
     "start": "npm run css-watch"
