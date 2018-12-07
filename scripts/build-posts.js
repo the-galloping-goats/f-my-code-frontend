@@ -14,12 +14,17 @@ function buildPosts() {
     .then(posts => {
       posts.data.forEach(post => {
         // hideBtns(user_id)
-        postsDiv.appendChild(buildPanel(post));
+        postsDiv.appendChild(buildPanel(
+          post,
+          listeners.getDeleteHandler(buildPosts),
+          listeners.getCommentsHandler(buildPosts),
+          listeners.voteUp(buildPosts)
+        ));
       })
     })
 }
 
-function buildPanel({ id, user_id, description, code, title, username, rating }) {
+function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp) {
 
 
   const titleHTML = buildElement("h3", { innerText: title });
@@ -40,7 +45,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating })
     innerText: "❌",
     attributes: {"data-post-id": id },
     listeners: [
-      { action: "click", callback: listeners.getDeleteHandler }]
+      { action: "click", callback: getDeleteHandler }]
   });
 
   const commButHTML = buildElement("a", {
@@ -48,7 +53,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating })
     innerText: "Read Comments",
     listeners: [{
       action: "click",
-      callback: listeners.getCommentsHandler
+      callback: getCommentsHandler
     }]
   });
 
@@ -58,7 +63,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating })
     attributes: { "data-post-id": id },
     listeners: [{
       action: "click",
-      callback: listeners.voteUp
+      callback: voteUp
     }]
   });
 

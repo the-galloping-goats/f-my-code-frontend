@@ -12,8 +12,6 @@ function buildComments(comments) {
 
   comments.forEach(comment => {
 
-    console.log(comment);
-
     const userHTML = buildElement("h4", { innerText: comment.username })
     const commHTML = buildElement("span", { innerText: comment.content })
     const itemHTML = buildElement("li", { children: [userHTML, commHTML] })

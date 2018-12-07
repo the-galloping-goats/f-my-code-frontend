@@ -1,5 +1,5 @@
 const axios = require('axios')
-const heroku = "https://f-my-code.herokuapp.com";
+const heroku = "http://localhost:3000";
 
 
 function getAllPosts() {

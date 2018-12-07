@@ -1,6 +1,6 @@
 const axios = require("axios");
 const buildPosts = require("./build-posts");
-const server = "https://f-my-code.herokuapp.com";
+const server = "localhost:3000";
 
 const {
   getAllPosts,
