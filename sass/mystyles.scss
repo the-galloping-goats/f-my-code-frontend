@@ -51,7 +51,7 @@ background-size: 0/50% auto;
  *  CARD PANEL SETTINGS
  */
 
-div.card-panel a#read-comments,
+div.card-panel a.more-or-less,
 div.card-panel code,
 div.card-panel span {
   display: block;
@@ -70,7 +70,7 @@ div.submit {
   color: $eggshell;
 }
 
-div.card-panel a#read-comments {
+div.card-panel a.more-or-less {
   margin-top: 50px;
   text-align: center;
 }
@@ -82,16 +82,21 @@ code {
 }
 
 .hide {
-  display: none;
+  visibility: hidden;
 }
 
 div.card-panel {
   background-color: rgba(253, 253, 253, 0.4);
 }
-#read-comments {
+
+a.more-or-less {
   font-size: 20px;
   color: $purple;
+  cursor: pointer;
 }
+
+
+
 div.card-panel span.rating {
   font-size: 17px;
   font-weight: bold;
@@ -105,6 +110,7 @@ div.card-panel span.user {
 a.vote {
   font-size: 40px;
   display: inline;
+  cursor: pointer;
 }
 
 textarea.newText {

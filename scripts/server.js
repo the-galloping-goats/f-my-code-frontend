@@ -47,7 +47,6 @@ function delComment(id, cId) {
 
 function createRating(entry, id) {
   const token = localStorage.getItem("token");
-  console.log(token);
   return axios.post(
     heroku + "/posts/" + id + "/ratings",
     entry, {
@@ -59,6 +58,10 @@ function createRating(entry, id) {
 
 function getRating(id) {
   return axios.get(heroku + "/posts/" + id + "/rating")
+}
+
+function votes() {
+
 }
 
 module.exports = {

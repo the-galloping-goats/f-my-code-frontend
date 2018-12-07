@@ -32,7 +32,7 @@ body {
 /*
  *  CARD PANEL SETTINGS
  */
-div.card-panel a#read-comments,
+div.card-panel a.more-or-less,
 div.card-panel code,
 div.card-panel span {
   display: block; }
@@ -46,7 +46,7 @@ div.card-panel h3 {
 div.submit {
   color: #EAEFD3; }
 
-div.card-panel a#read-comments {
+div.card-panel a.more-or-less {
   margin-top: 50px;
   text-align: center; }
 
@@ -56,14 +56,15 @@ code {
   margin-top: 30px; }
 
 .hide {
-  display: none; }
+  visibility: hidden; }
 
 div.card-panel {
   background-color: rgba(253, 253, 253, 0.4); }
 
-#read-comments {
+a.more-or-less {
   font-size: 20px;
-  color: #27233A; }
+  color: #27233A;
+  cursor: pointer; }
 
 div.card-panel span.rating {
   font-size: 17px;
@@ -81,3 +82,5 @@ textarea.newText {
   height: 100px;
   font-size: 20px;
   background-color: rgba(253, 253, 253, 0.4); }
+  display: inline;
+  cursor: pointer; }

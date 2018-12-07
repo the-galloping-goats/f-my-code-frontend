@@ -2,7 +2,10 @@ const axios = require("axios");
 const buildElement = require("./utils");
 const server = require("./server");
 const listeners = require("./btnEvents");
+<<<<<<< HEAD
 const userBtns = require("./homepage");
+=======
+>>>>>>> tidied up comments
 
 const postsDiv = document.querySelector("#showPosts");
 const user_id = localStorage.getItem("user_id");
@@ -26,7 +29,7 @@ function buildPosts() {
 
 function buildPanel({ id, user_id, description, code, title, username, rating }, getDeleteHandler, getCommentsHandler, voteUp, voteDown) {
 
-
+  // const voted = getVoted();
   const titleHTML = buildElement("h3", { innerText: title });
   const descHTML = buildElement("div", { innerText: description });
   const codeHTML = buildElement("code", { innerText: code });
@@ -50,6 +53,7 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
 
   const commButHTML = buildElement("a", {
     id: "read-comments",
+    class: [ "more-or-less" ],
     innerText: "Read Comments",
     listeners: [{
       action: "click",
@@ -76,6 +80,8 @@ function buildPanel({ id, user_id, description, code, title, username, rating },
       callback: voteDown
     }]
   });
+
+
 
   const votingHTML = [];
 

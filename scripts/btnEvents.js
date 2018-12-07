@@ -14,6 +14,8 @@ function getCommentsHandler(buildPosts) {
     const cardPanel = button.parentElement
     const id = cardPanel.getAttribute("data-post-id")
 
+    button.classList.add("hide");
+
     return server.getAllComments(id)
       .then(res => {
 <<<<<<< HEAD
@@ -107,5 +109,19 @@ function voteDown(buildPosts) {
   }
 }
 
+<<<<<<< HEAD
 module.exports = { getCommentsHandler, getDeleteHandler, voteUp, voteDown }
 >>>>>>> rerendering and downvoting work on voting
+=======
+function shrinkComments(e) {
+  console.log("here I go!");
+  const parentList = e.target.parentElement;
+  const parentDiv = parentList.parentElement;
+  const readMore = parentDiv.querySelector(".more-or-less");
+
+  parentList.remove()
+
+}
+
+module.exports = { getCommentsHandler, getDeleteHandler, voteUp, voteDown, shrinkComments }
+>>>>>>> tidied up comments
