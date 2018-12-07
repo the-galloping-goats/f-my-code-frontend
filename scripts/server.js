@@ -11,7 +11,12 @@ function getAllComments(id) {
 }
 
 function createPost(newPost) {
-  return axios.post(heroku + "/posts", newPost)
+  const token = localStorage.getItem("token")
+  return axios.post(heroku + "/posts", newPost, {
+    headers: {
+      Authorization: "bearer " + token
+    }
+  })
 }
 
 function createComment(id, newComment) {
@@ -30,10 +35,10 @@ function delPost(id) {
   const token = localStorage.getItem("token")
   return axios.delete(
     heroku + "/posts/" + id, {
-    headers: {
-      Authorization: "bearer " + token
-    }
-  })
+      headers: {
+        Authorization: "bearer " + token
+      }
+    })
 }
 
 function delComment(id, cId) {
@@ -45,9 +50,11 @@ function createRating(entry, id) {
   console.log(token);
   return axios.post(
     heroku + "/posts/" + id + "/ratings",
-    entry,
-    { headers: { Authorization: "bearer " + token }
-  });
+    entry, {
+      headers: {
+        Authorization: "bearer " + token
+      }
+    });
 }
 
 function getRating(id) {

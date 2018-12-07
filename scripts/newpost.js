@@ -1,27 +1,45 @@
-function request(path, method = 'get', body = null) {
-    let bearerToken = ''
-    const token = localStorage.getItem('token')
+const buildPosts = require("./build-posts");
+const server = "https://f-my-code.herokuapp.com";
 
-    document.querySelector('#post').addEventListener('submit', function (event) {
+
+function create() {
+
+    document.querySelector('#post').addEventListener('submit', (e) => {
         event.preventDefault()
 
-        const title = event.target.title.value
-        const description = event.target.description.value
-        const code = event.target.code.value
+        const newPost = {
+            title = event.target.title.value,
+            description = event.target.description.value,
+            code = event.target.code.value
+        }
 
-        request('/posts', 'post', { title, description, code })
-            .then(function (response) {
-                document.querySelector('#error').classList.add('hide-auth-error')
-                let token = localStorage.getIteLm('token')
-
-                ///////////////////////////////////////////////////////////////////////////////////
-                ////////////////////////// change current url to deployed login-url ///////////////
-                ///////////////////////////////////////////////////////////////////////////////////
-
-                if (!token) window.location.replace("http://f-my-code.com/login")
+        createPosts(newPost)
+            .then((res) => {
+                window.location.replace("http://f-my-code.com/")
             })
             .catch(function (error) {
                 document.querySelector('#error').classList.remove('hide-auth-error')
             })
-        })
-    }
+    })
+}
+
+function updatePost(e) {
+    // const titleHeader = document.querySelector('.titleEdit')
+    // const contentBody = document.querySelector('.message-body')
+    // const title = document.querySelector('#title')
+
+
+    update(this.getAttribute('data-post-id'), {
+        title: title.value,
+        content: content.value
+      }).then((res) => {
+
+        createPosts(newPost)
+            .then((res) => {
+                window.location.replace("http://f-my-code.com/")
+            })
+            .catch(function (error) {
+                document.querySelector('#error').classList.remove('hide-auth-error')
+            })
+    })
+}
