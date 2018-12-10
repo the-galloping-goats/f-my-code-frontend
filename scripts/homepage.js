@@ -17,6 +17,7 @@ getAllPosts()
   .then((res) => {
     buildPosts(res.data)
     document.querySelector("#postPage").addEventListener('click', (e) => {
+      // don't hard code the url. It makes deploying more difficult
        window.location.replace("http://127.0.0.1:8080/html/newpost.html")
      })
   })

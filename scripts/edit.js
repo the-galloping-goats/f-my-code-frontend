@@ -3,7 +3,7 @@ const server = require("./server")
 
 
 function editPost(titleHTML, descHTML, codeHTML, id, cb) {
-  // console.log(titleHTML)
+  // console.log(titleHTML) <- :/
   const title = titleHTML.innerText
   const description = descHTML.innerText
   const code = codeHTML.innerText
@@ -43,7 +43,8 @@ function editPost(titleHTML, descHTML, codeHTML, id, cb) {
     })
     
    
-    
+  // remove unused code
+  
   // const editForm = buildElement("form", {
   //   children:[titleInput, descInput, codeInput, submitButHTML], listeners: [{
   //     action: "submit",

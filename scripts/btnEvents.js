@@ -3,7 +3,7 @@ const server = require("./server");
 const edit = require("./edit")
 
 
-
+// remove unused parameters. eg (buildPosts)
 function getCommentsHandler(buildPosts) {
   return function(e) {
     const button = e.target
@@ -34,6 +34,7 @@ function editBtnHandler(cb){
     const editArea = edit(titleHTML, descHTML, codeHTML, id, cb)
     panelCard.insertBefore(editArea, titleHTML)
 
+    // one expression per line please
     titleHTML.remove(), descHTML.remove(), descHTML.remove(), codeHTML.remove()
 
   }
