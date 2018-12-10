@@ -11,4 +11,6 @@
 
 * Start in "Development Mode" ```npm run dev```
 
+### __Browser Example__
 
+![Alt text](/img/fmyscreenshot.png)
